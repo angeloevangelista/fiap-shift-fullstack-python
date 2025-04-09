@@ -30,7 +30,6 @@ def main():
 if __name__ == "__main__":
   main()
 
-
 # Atividade
 #
 # - Consumir a API OpenWeatherMap (https://api.openweathermap.org/data/2.5/find?q=Aclimação&appid=5796abbde9106b7da4febfae8c44c232&units=metric)
