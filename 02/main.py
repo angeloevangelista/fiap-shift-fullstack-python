@@ -1,13 +1,22 @@
 """shut it"""
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
+import uuid
 
 app = FastAPI()
 
 class User(BaseModel):
-  id: int
+  id: int = None
   name: str
   active: bool
+
+# class Teste():
+#   id: str = str(uuid.uuid4())
+#   name: str = ""
+
+# teste = Teste()
+# print(f"id: {teste.id}")
+# print(f"name: {teste.name}")
 
 class Todo():
   id: int
@@ -31,6 +40,7 @@ def list_users():
 
 @app.post("/users", status_code=201)
 def create_user(user: User):
+  """shut it"""
   next_id = max(
     [
       user.id
@@ -49,6 +59,7 @@ def create_user(user: User):
 
 @app.get("/users/{user_id}")
 def get_user(user_id: int):
+  """shut it"""
   found_users = [
     user
     for user
@@ -66,6 +77,7 @@ def get_user(user_id: int):
 
 @app.delete("/users/{user_id}", status_code=204)
 def delete_user(user_id: int):
+  """shut it"""
   global users_db
 
   found_users = [
