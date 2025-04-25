@@ -14,7 +14,7 @@ def get_connection_string():
   #   f"{os.getenv('DB_NAME')}"
   # )
 
-  connection_string = "postgresql://docker-user:docker-password@localhost:5435/todos"
+  connection_string = "postgresql://docker-user:docker-password@localhost:5432/todos"
 
   return connection_string
 

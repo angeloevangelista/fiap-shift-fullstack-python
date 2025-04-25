@@ -1,7 +1,8 @@
 from sqlalchemy import update
+from sqlalchemy.orm import joinedload
 
 from database.session import get_session
-from database.models import User
+from database.models import User, Todo
 
 def list_users():
   users = []
@@ -51,10 +52,34 @@ def update_user(user_to_update: User):
 
   return updated_user
 
-updated_user = update_user(User(
-  id=12,
-  name="Andre",
-  email="andre@email.com",
-))
+# created_user = create_user(User(
+#   name="Andre",
+#   email="andre@email.com",
+# ))
 
-print(updated_user)
+# found_user = get_user(1)
+
+# todo_1 = Todo(title="Limpar a pia", user=found_user)
+# todo_2 = Todo(title="Tomar banho", user=found_user)
+# todo_3 = Todo(title="Comprar lapis", user=found_user)
+# todo_4 = Todo(title="Levar o cachorro pra passear", user=found_user)
+
+# with get_session() as session:
+#   session.add_all([todo_1, todo_2, todo_3, todo_4])
+#   session.commit()
+
+# todos = []
+
+# with get_session() as session:
+#   todos = session.query(Todo).all()
+
+# for todo in todos:
+#   print(todo.title)
+
+session = get_session()
+
+users = session.query(User).options(joinedload(User.todos)).all()
+
+for user in users:
+  for todo in user.todos:
+    print(f"user: {user.name} | {todo.title}")
