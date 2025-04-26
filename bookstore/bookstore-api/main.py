@@ -1,20 +1,24 @@
 import time
-from fastapi import FastAPI
+import dotenv
+from typing import Annotated
+from fastapi import FastAPI, Depends
 
-from routers import auth
+from routers import auth, books
 
-# matched = bcrypt.checkpw(
-#   b"12345678",
-#   b"$2b$089nLQM7kb9gK36iHUGd5jbxOIpnitlcGtx1nSVvwKXaOSlRPu.UQIpi",
-# )
+dotenv.load_dotenv()
 
 app = FastAPI()
 
+def get_message():
+  return "Exemplo de mensagem injetada"
+
 @app.get("/api/health")
-def health_check():
+def health_check(message: Annotated[dict, Depends(get_message)]):
   return {
     "healthy": True,
     "timestamp": time.asctime(),
+    "message": message,
   }
 
 app.include_router(auth.router)
+app.include_router(books.router)

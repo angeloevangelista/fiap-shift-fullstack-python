@@ -1,15 +1,13 @@
 import os
 from datetime import datetime, timezone, timedelta
+
 import jwt
 import bcrypt
-import dotenv
 from pydantic import BaseModel
 from fastapi import APIRouter, HTTPException
 
-dotenv.load_dotenv()
-
 from database.models import User
-from database.session import get_session
+from dependencies import DbSessionDependency
 
 router = APIRouter()
 
@@ -18,11 +16,13 @@ class UserRequest(BaseModel):
   password: str
 
 @router.post("/cadastro", status_code=201)
-def create_user(user_request: UserRequest):
-  with get_session() as session:
-    existing_user = session.query(User).where(
-      User.name == user_request.username,
-    ).one_or_none()
+def create_user(
+  user_request: UserRequest,
+  db_session: DbSessionDependency,
+):
+  existing_user = db_session.query(User).where(
+    User.name == user_request.username,
+  ).one_or_none()
 
   if existing_user != None:
     raise HTTPException(400, detail="Um usuário com o mesmo nome já existe")
@@ -37,23 +37,22 @@ def create_user(user_request: UserRequest):
     password=hashed_password,
   )
 
-  with get_session() as session:
-    session.add(created_user)
-    session.commit()
-    session.refresh(created_user)
+  db_session.add(created_user)
+  db_session.commit()
+  db_session.refresh(created_user)
 
   del(created_user.password)
 
   return created_user
 
 @router.post("/", status_code=201)
-def create_session(user_request: UserRequest):
-  found_user = None
-
-  with get_session() as session:
-    found_user = session.query(User).where(
-      User.name == user_request.username,
-    ).one_or_none()
+def create_session(
+  user_request: UserRequest,
+  db_session: DbSessionDependency,
+):
+  found_user = db_session.query(User).where(
+    User.name == user_request.username,
+  ).one_or_none()
 
   if found_user is None:
     raise HTTPException(401, "A combinação usuário e senha não coincidem")

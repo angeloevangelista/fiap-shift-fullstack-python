@@ -3,6 +3,8 @@ import dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session
 
+from database.models import Book
+
 dotenv.load_dotenv()
 
 def get_connection_string():
@@ -17,9 +19,17 @@ def get_connection_string():
   return connection_string
 
 def get_session():
-  engine = create_engine(
-    get_connection_string(),
-    echo=True,
-  )
+  session = None
 
-  return Session(engine)
+  try:
+    engine = create_engine(
+      get_connection_string(),
+      echo=True,
+    )
+
+    session = Session(engine)
+
+    yield session
+  finally:
+    if session != None:
+      session.close()
