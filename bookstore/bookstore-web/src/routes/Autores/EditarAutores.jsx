@@ -5,7 +5,7 @@ import axios from 'axios';
 
 const EditarAutores = () => {
 
-  const { id } = useParams(); 
+  const { id } = useParams();
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(true);
   const [autor, setAutor] = useState({
@@ -21,7 +21,7 @@ const EditarAutores = () => {
       try {
         setLoading(true);
         // endpoint sendo chamada pela fuinção axios e a requisição get (buscar)
-        const response = await axios.get(`http://localhost:3000/autores/${id}`, {
+        const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/autores/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -52,7 +52,7 @@ const EditarAutores = () => {
     e.preventDefault();
     try {
          // endpoint sendo chamada pela fuinção axios e a requisição put (alterar)
-      await axios.put(`http://localhost:3000/autores/${id}`, autor, {
+      await axios.put(`${import.meta.env.VITE_API_BASE_URL}/autores/${id}`, autor, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -104,7 +104,7 @@ const EditarAutores = () => {
             type="email"
             name="email"
             value={autor.email}
-            onChange={handleChange}  
+            onChange={handleChange}
             className="w-full px-3 py-2 border rounded focus:ring-blue-500 focus:border-blue-500"
             required/>
         </div>
@@ -133,7 +133,7 @@ const EditarAutores = () => {
 
         <div className="flex gap-2">
           <button
-            type="submit" 
+            type="submit"
             className="flex-1 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 focus:ring-gray-500 "
             >
             Alterar
@@ -143,7 +143,7 @@ const EditarAutores = () => {
             onClick={() => navigate('/autores')}
             className="flex-1 px-4 py-2 bg-red-500 text-white rounded hover:bg-red-700 focus:ring-gray-500 "
             >
-            
+
             Cancelar
           </button>
         </div>

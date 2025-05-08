@@ -78,7 +78,7 @@ def list_books(db_session: DbSessionDependency, _: LoggedUserDependency,):
       )
     )
 
-  return books
+  return books_response
 
 @router.delete("/livros/{book_id}", status_code=204)
 def delete_book(book_id: int, db_session: DbSessionDependency, _: LoggedUserDependency):

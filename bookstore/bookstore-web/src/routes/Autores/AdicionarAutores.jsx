@@ -6,7 +6,7 @@ import axios from 'axios';
 const AdicionarAutores = () => {
 
   const navigate = useNavigate();
-  
+
   const [nome, setNome] = useState('');
   const [email, setEmail] = useState('');
   const [telefone, setTelefone] = useState('');
@@ -17,7 +17,7 @@ const AdicionarAutores = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:3000/autores', {
+      await axios.post(`${import.meta.env.VITE_API_BASE_URL}/autores`, {
         nome,
         email,
         telefone,
@@ -36,7 +36,7 @@ const AdicionarAutores = () => {
   return (
     <div className="max-w-md mx-auto mt-14 p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-medium mb-6">Adicionar um Novo Autor</h2>
-     
+
       {error && <p className="text-red-500 mb-4">{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -46,7 +46,7 @@ const AdicionarAutores = () => {
             value={nome}
             onChange={(e) => setNome(e.target.value)}
             className="w-full px-3 py-2 border rounded"
-            
+
           />
         </div>
         <div>
@@ -65,7 +65,7 @@ const AdicionarAutores = () => {
             value={telefone}
             onChange={(e) => setTelefone(e.target.value)}
             className="w-full px-3 py-2 border rounded"
-            
+
           />
         </div>
         <div>
@@ -75,7 +75,7 @@ const AdicionarAutores = () => {
             value={bio}
             onChange={(e) => setBio(e.target.value)}
             className="w-full px-3 py-2 border rounded"
-            
+
           />
         </div>
 
@@ -95,7 +95,7 @@ const AdicionarAutores = () => {
           >
             Cancelar
           </button>
-        </div> 
+        </div>
       </form>
     </div>
   )

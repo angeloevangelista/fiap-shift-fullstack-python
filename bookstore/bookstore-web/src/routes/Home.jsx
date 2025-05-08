@@ -1,8 +1,7 @@
-import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { useState, useEffect } from 'react';
+
 import '../css/home.css'
-
-
 
 const Home = () => {
   const [livros, setLivros] = useState([]);
@@ -10,7 +9,7 @@ const Home = () => {
   const fetchLivros = async () => {
     try {
       // Endpoint sendo chamado pela função axios usando a requisição GET
-      const response = await axios.get('http://localhost:3000/livros', {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/livros`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`, // Verifica a autenticação
         },
@@ -26,7 +25,7 @@ const Home = () => {
   }, []);
 
   return (
-    <section className="home"> 
+    <section className="home">
       <section className="cardsProd">
         <h2 className="title">Dashboard Livraria</h2>
 

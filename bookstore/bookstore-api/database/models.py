@@ -31,3 +31,23 @@ class Book(Base):
       f"pages: {self.pages}; "
       f"isbn: {self.isbn};"
     )
+
+# bio
+
+class Author(Base):
+  __tablename__ = "authors"
+
+  id: Mapped[int] = mapped_column(primary_key=True)
+  name: Mapped[str] = mapped_column(String(255))
+  email: Mapped[str] = mapped_column(String(120))
+  cellphone: Mapped[str] = mapped_column(String(15))
+  bio: Mapped[str] = mapped_column(Text())
+
+  def __str__(self):
+    return (
+      f"id: {self.id}; "
+      f"name: {self.name}; "
+      f"email: {self.email}; "
+      f"cellphone: {self.cellphone}; "
+      f"bio: {self.bio};"
+    )

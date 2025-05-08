@@ -1,0 +1,12 @@
+__pycache__
+.venv
+.vscode
+alembic
+exemplos
+.env
+.env.example
+.gitignore
+alembic.ini
+compose.yml
+readme.md
+shift - bookstore.postman_collection.json

@@ -1,46 +1,44 @@
-import {useState} from 'react'
-import {Link, useNavigate} from 'react-router-dom'
-import axios from 'axios'
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
-
   //HOOK- useNavigate- ele redirecionamento entre componentes
-  const navigate  = useNavigate();
+  const navigate = useNavigate();
 
   //HOOK- useState - Manipula o estado da variavel
 
-   const [username, setUserName]=useState('');
-   const [password, setPasword] =useState('');
-   const [user,setUser] =useState('');
-   const [error, setError] =useState(null);
+  const [username, setUserName] = useState("");
+  const [password, setPasword] = useState("");
+  const [user, setUser] = useState("");
+  const [error, setError] = useState(null);
 
-   //CRIANDO A FUNÇÃO HANDLE SUBMIT
+  //CRIANDO A FUNÇÃO HANDLE SUBMIT
 
-   const handleSubmit = async (e)=>{
+  const handleSubmit = async (e) => {
     //PREVINE QUE O FORMULARIO REALIZE QUALQUER ALTERAÇÃO
     e.preventDefault();
-    
-    try{
+
+    try {
       //CHAMANDO O ENDPOINT(API) PELA FUNÇÃO AXIOS
-      const response = await axios.post('http://localhost:3000/',{
+      const response = await axios.post(import.meta.env.VITE_API_BASE_URL, {
         username,
         password,
-      })
+      });
       //REBECE OS TOKENS DO USUARIO E GUARDA DENTRO DE DATA
-      const {token, tokenRenovado, user} = response.data;
+      const { token, tokenRenovado, user } = response.data;
 
-       //Guarda os dados que vem da API no localstogare 
-      localStorage.setItem('token',token);
-      localStorage.setItem('tokenRenovado',tokenRenovado);
-      localStorage.setItem('user',JSON.stringify(response.data.user))
+      //Guarda os dados que vem da API no localstogare
+      localStorage.setItem("token", token);
+      localStorage.setItem("tokenRenovado", tokenRenovado);
+      localStorage.setItem("user", JSON.stringify(response.data.user));
 
       setUser(user);
-      navigate('/menu');
-
-    }catch(error){
-          setError('Usuário e senha Inválidos')
+      navigate("/menu");
+    } catch (error) {
+      setError("Usuário e senha Inválidos");
     }
-   }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
@@ -53,7 +51,9 @@ const Login = () => {
               type="text"
               placeholder="Digite seu usuario"
               value={username}
-              onChange={(e)=>{setUserName(e.target.value)}}
+              onChange={(e) => {
+                setUserName(e.target.value);
+              }}
               className="w-full px-3 py-2 border rounded"
             />
           </div>
@@ -63,21 +63,30 @@ const Login = () => {
               type="password"
               placeholder="Digite sua senha"
               value={password}
-              onChange={(e)=>{setPasword(e.target.value)}}
+              onChange={(e) => {
+                setPasword(e.target.value);
+              }}
               className="w-full px-3 py-2 border rounded"
             />
           </div>
-          <button type="submit" className="w-full px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Login</button>
+          <button
+            type="submit"
+            className="w-full px-3 py-2 bg-blue-500 text-white rounded hover:bg-blue-700"
+          >
+            Login
+          </button>
           <div>
-            <Link to="/cadastro" className="font-medium text-blue-600 hover:text-green-700 flex justify-center ">
+            <Link
+              to="/cadastro"
+              className="font-medium text-blue-600 hover:text-green-700 flex justify-center "
+            >
               Já tem uma conta ? Registre-se
             </Link>
-        
           </div>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

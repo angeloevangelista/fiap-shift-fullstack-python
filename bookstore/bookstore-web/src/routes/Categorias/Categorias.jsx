@@ -16,7 +16,7 @@ const Categorias = () => {
 
   const apiCategorias = async () => {
     try {
-      const response = await axios.get('http://localhost:3000/categorias', {
+      const response = await axios.get(`${import.meta.env.VITE_API_BASE_URL}/categorias`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('token')}`
         }
@@ -53,7 +53,7 @@ const Categorias = () => {
     if (window.confirm('Tem certeza de que deseja excluir esta Categoria?')) {
       try {
         // endpoint sendo chamada pela fuinção axios e a requisição delete (deletar)
-        await axios.delete(`http://localhost:3000/categorias/${id}`, {
+        await axios.delete(`${import.meta.env.VITE_API_BASE_URL}/categorias/${id}`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`
           }
@@ -80,7 +80,7 @@ const Categorias = () => {
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-2xl font-bold">Categorias</h2>
         <Link
-          to="/adicionarCategorias" 
+          to="/adicionarCategorias"
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
           Adicionar uma nova Categoria
         </Link>
@@ -120,7 +120,7 @@ const Categorias = () => {
           </div>
         )}
       </div>
-      
+
       {error && (
         <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
           {error}
@@ -149,7 +149,7 @@ const Categorias = () => {
                   <td className="px-6 py-4">
                     <div className="flex gap-2">
                       <button
-                        onClick={() => navigate(`/editarCategorias/${item.id}`)}     
+                        onClick={() => navigate(`/editarCategorias/${item.id}`)}
                         className="px-3 py-1 bg-orange-500 text-white rounded hover:bg-orange-600">
                         Editar
                       </button>
